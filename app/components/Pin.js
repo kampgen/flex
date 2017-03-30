@@ -3,66 +3,68 @@
 	import {
 		  StyleSheet,
 		  View,
-		  Text
+		  Text,
+		  Image,
+		  Dimensions
 	} from 'react-native'
 
-	import {
-		  Back,
-		  Heart,
-		  More,
-		  PinIcon,
-		  Share
-	} from '../util/icons'
+	import UtilityNavButton from './UtilityNavButton'
+	import Button from './Button'
+	import LocalImage from './LocalImage'
+
+	let windowWidth = Dimensions.get('window').width
 
 	export default class Pin extends Component {
 	  render() {
 	    return (
-	        <View style={styles.PinContainer}>
+	        <View style={[styles.PinContainer, {width: windowWidth/this.props.columns}]}>
+
 				{/*Header*/}
 				<View style={styles.PinHeader}>
 					{/*Menu de incones*/}
 					<View style={styles.UtilityNav}>
-						<Back />
-						<Heart />
-						<Share />
-						<More />
+						<UtilityNavButton icon="Back"/>
+						<UtilityNavButton icon="Heart"/>
+						<UtilityNavButton icon="Share"/>
+						<UtilityNavButton icon="More"/>
 					</View>
 					{/*Botão Salvar*/}
 					<View style={styles.PinButtonContainer}>
-						<View style={styles.PinButton}>
-							<PinIcon />
-							<Text style={styles.PinButtonText}>Save</Text>
-						</View>
+						<Button red icon textColor="white" text="Save"/>
 					</View>
 				</View>
 
 				<View style={styles.PinContent}>
-					<Text style={styles.ImagePlaceholder}>Placeholder</Text>
+					<LocalImage
+						source={this.props.pinsource.imagesource}
+						originalWidth={this.props.pinsource.originalWidth}
+						originalHeight={this.props.pinsource.originalHeight}
+						columns={this.props.columns}
+					/>
 				</View>
 
 				<View style={styles.PinMeta}>
 					<View style={styles.PinMetaTextContainer}>
 						<Text style={styles.PinMetaText}>Saved from</Text>
-						<Text style={styles.PinMetaText}>website.com</Text>
+						<Text style={[styles.PinMetaText, styles.TextBold]}>website.com</Text>
 					</View>
 					<View style={styles.PinButtonContainer}>
-						<View style={styles.PinButton}>
-							<Text style={styles.PinButtonText}>Visit</Text>
-						</View>
+						<Button textColor ="black" text="Visit"/>
 					</View>
 				</View>
 
 				<View style={styles.PinUser}>
 					<View style={styles.PinUserAvatar}>
-						<Text>Placeholder</Text>
+
 					</View>
-				</View>
-				<View style={styles.PinUserContainer}>
-					<Text style={styles.PinUserText}>
-						<Text style={styles.TextBold}>User Name</Text>
-						saved to <Text style={styles.TextBold}>Space</Text>
-					</Text>
-					<Text style={styles.PinUserText}>Descrição Lorem Ipsum</Text>
+
+					<View style={styles.PinUserContainer}>
+						<Text style={styles.PinUserText}>
+							<Text style={styles.TextBold}>User Name </Text>
+							saved to <Text style={styles.TextBold}>Space</Text>
+						</Text>
+						<Text style={styles.PinUserText}>Descrição Lorem Ipsum</Text>
+					</View>
 				</View>
 	        </View>
 	    )
@@ -71,8 +73,8 @@
 
 	const styles = StyleSheet.create({
 		PinContainer: {
-			flex: 1,
-			alignSelf: 'stretch'
+			//flex: 1,
+			//alignSelf: 'stretch'
 		},
 		PinHeader: {
 			backgroundColor: 'white',
@@ -80,6 +82,7 @@
 			alignItems: 'flex-end',
 			justifyContent: 'space-between',
 			flex: 1,
+			minHeight: 50, //minWidth, MaxWidth, maxHeight
 			padding: 8
 		},
 		UtilityNav: {
@@ -103,22 +106,52 @@
 			alignItems: 'flex-end'
 		},
 		PinContent: {
-		flex: 3,
 		justifyContent: 'center',
 		alignItems: 'center',
-		paddingHorizontal: 8
+		paddingHorizontal: 8,
+		borderRadius: 8
 		},
 		ImagePlaceholder: {
 			backgroundColor: '#1e1e1e',
 			flex: 1,
 			alignSelf: 'stretch',
-			borderRadius: 6
+			borderRadius: 6,
 		},
 		PinMeta: {
 			flex: 1,
-			backgroundColor: 'white'
+			minHeight: 70,
+			flexDirection: 'row',
+			paddingHorizontal: 8,
+			paddingTop: 16,
+			paddingBottom: 8
+		},
+		PinMetaTextContainer: {
+
+		},
+		UtilityButton: {
+			backgroundColor: '#cecece',
+			alignItems: 'center',
+			justifyContent: 'center'
+		},
+		UtilityButtonText: {
+			color: 'black',
+			fontWeight: 'bold'
+		},
+		PinUserContainer: {
 		},
 		PinUser: {
-			flex: 5
+			flex: 5,
+			flexDirection: 'row',
+			paddingHorizontal: 8
+		},
+		PinUserAvatar: {
+			width: 50,
+			height: 50,
+			borderRadius: 25,
+			marginRight: 8,
+			backgroundColor: 'black'
+		},
+		TextBold: {
+			fontWeight: 'bold'
 		},
 	})
